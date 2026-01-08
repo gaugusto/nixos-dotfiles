@@ -19,7 +19,7 @@
     bg3:    #cba6f7;
     fg0:    #f5c2e7;
     fg1:    #b4befe;
-    fg2:    #f38ba8;
+    fg2:    #74c7ec;
     fg3:    #585b70;
 }
 /* ROUNDED THEME FOR ROFI */
