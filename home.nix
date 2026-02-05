@@ -32,7 +32,13 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" ]; # Adicione os plugins que desejar
+      plugins = [ 
+        "git" 
+        "sudo" 
+        "docker" 
+        "command-not-found" 
+      ];
+      theme = "robbyrussell"; 
     };
   };
 
@@ -55,18 +61,10 @@
       }
     ];
 
-    events = [
-      # Bloqueia antes de suspender o sistema
-      {
-        event = "before-sleep";
-        command = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
-      }
-      # Responde a eventos de lock do sistema
-      {
-        event = "lock";
-        command = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
-      }
-    ];
+    events = {
+      before-sleep = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
+      lock = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
+    };
   };
 
   programs.alacritty.enable = true;
