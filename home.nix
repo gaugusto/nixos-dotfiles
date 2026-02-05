@@ -24,23 +24,49 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    # Em vez de initExtraFirst, usamos initContent com mkBefore
-    initContent = lib.mkBefore ''
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-    '';
-
     shellAliases = {
       btw = "echo I use Niri btw";
-      nrs = "sudo nrs switch --impure --flake ~/nixos-dotfiles#niri-btw";
-      nrb = "sudo nrb boot --impure --flake ~/nixos-dotfiles#niri-btw";
+      nrs = "sudo nixos-rebuild switch --impure --flake ~/nixos-dotfiles#niri-btw";
+      nrb = "sudo nixos-rebuild boot --impure --flake ~/nixos-dotfiles#niri-btw";
     };
 
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "sudo" ]; # Adicione os plugins que desejar
     };
+  };
+
+  services.swayidle = {
+    enable = true;
+    systemdTarget = "graphical-session.target"; 
+
+    timeouts = [
+      # 1. Bloqueia a tela após 5 minutos (300 segundos)
+      {
+        timeout = 300;
+        command = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
+      }
+      # 2. Desliga os monitores via Niri após 10 minutos (600 segundos)
+      {
+        timeout = 600;
+        command = "${pkgs.niri}/bin/niri msg action power-off-monitors";
+        # Opcional: niri costuma religar ao detectar atividade, mas você pode reforçar:
+        resumeCommand = "${pkgs.niri}/bin/niri msg action power-on-monitors";
+      }
+    ];
+
+    events = [
+      # Bloqueia antes de suspender o sistema
+      {
+        event = "before-sleep";
+        command = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
+      }
+      # Responde a eventos de lock do sistema
+      {
+        event = "lock";
+        command = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
+      }
+    ];
   };
 
   programs.alacritty.enable = true;
