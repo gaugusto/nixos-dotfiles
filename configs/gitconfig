@@ -1,0 +1,37 @@
+[user]
+    name = Guilherme Augusto de Macedo 
+    email = gaugustomacedo@gmail.com 
+
+[core]
+    # Define o editor padrão (ex: code, vim, nano)
+    editor = nvim
+    # Trata finais de linha (importante para evitar conflitos Windows/Linux)
+    autocrlf = input
+
+[alias]
+    # Atalhos para comandos comuns
+    st = status
+    co = checkout
+    br = branch
+    cm = commit -m
+    ps = push
+    pl = pull
+    
+    # Um log visual e bonitão
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+[init]
+    # Define 'main' como branch padrão em novos projetos (padrão moderno)
+    defaultBranch = main
+
+[pull]
+    # Evita commits de merge desnecessários ao dar pull
+    rebase = true
+
+[color]
+    # Deixa o terminal colorido e legível
+    ui = auto
+
+[help]
+    # Corrige comandos digitados errado automaticamente (ex: 'git stauts')
+    autocorrect = 1
