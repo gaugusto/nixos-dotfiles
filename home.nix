@@ -8,16 +8,16 @@
   home.stateVersion = "25.11";
 
 
-  # programs.bash = {
-  #   enable = true;
-  #
-  #   shellAliases = {
-  #     btw = "echo I use Niri btw";
-  #     rebuild-s = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#niri-btw";
-  #     rebuild-b = "sudo nixos-rebuild boot --flake ~/nixos-dotfiles#niri-btw";
-  #   };
-  # };
-  
+# programs.bash = {
+#   enable = true;
+#
+#   shellAliases = {
+#     btw = "echo I use Niri btw";
+#     rebuild-s = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#niri-btw";
+#     rebuild-b = "sudo nixos-rebuild boot --flake ~/nixos-dotfiles#niri-btw";
+#   };
+# };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -42,30 +42,8 @@
     };
   };
 
-  services.swayidle = {
-    enable = true;
-    systemdTarget = "graphical-session.target"; 
-
-    timeouts = [
-      # 1. Bloqueia a tela após 5 minutos (300 segundos)
-      {
-        timeout = 300;
-        command = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
-      }
-      # 2. Desliga os monitores via Niri após 10 minutos (600 segundos)
-      {
-        timeout = 600;
-        command = "${pkgs.niri}/bin/niri msg action power-off-monitors";
-        # Opcional: niri costuma religar ao detectar atividade, mas você pode reforçar:
-        resumeCommand = "${pkgs.niri}/bin/niri msg action power-on-monitors";
-      }
-    ];
-
-    events = {
-      before-sleep = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
-      lock = "${pkgs.dms-shell}/bin/dms ipc call lockScreen lock";
-    };
-  };
+# systemd.user.services.swayidle.Service.Environment =
+#   "PATH=${lib.makeBinPath [ pkgs.quickshell pkgs.dms-shell pkgs.niri ]}";
 
   programs.alacritty.enable = true;
   services.polkit-gnome.enable = true;
