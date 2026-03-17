@@ -1,12 +1,20 @@
 { config, pkgs, inputs, lib, ...}: 
 {
   imports = [
+    inputs.dms.homeModules.dank-material-shell
   ];
 
   home.username = "gaugusto";
   home.homeDirectory = "/home/gaugusto";
   home.stateVersion = "25.11";
 
+  services.polkit-gnome.enable = true;
+
+  programs.dank-material-shell = {
+    enable = true;
+    enableSystemMonitoring = true;
+    dgop.package = inputs.dgop.packages.${pkgs.system}.default;
+  };
 
 # programs.bash = {
 #   enable = true;
@@ -42,11 +50,8 @@
     };
   };
 
-# systemd.user.services.swayidle.Service.Environment =
-#   "PATH=${lib.makeBinPath [ pkgs.quickshell pkgs.dms-shell pkgs.niri ]}";
 
   programs.alacritty.enable = true;
-  services.polkit-gnome.enable = true;
 
   home.file.".config/niri".source = ./configs/niri;
   home.file.".config/alacritty".source = ./configs/alacritty;
@@ -55,5 +60,7 @@
 
   home.packages = with pkgs; [
     lazygit
+    xwayland-satellite
   ];
+
 }

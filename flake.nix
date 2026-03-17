@@ -13,15 +13,19 @@
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, dms, ...} @ inputs : {
+  outputs = { nixpkgs, home-manager, dms, dgop, ...} @ inputs : {
     nixosConfigurations.niri-btw = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
-        dms.nixosModules.dank-material-shell
         home-manager.nixosModules.home-manager {
           home-manager = {
             useGlobalPkgs = true;
