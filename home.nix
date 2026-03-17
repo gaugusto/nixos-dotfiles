@@ -63,4 +63,16 @@
     xwayland-satellite
   ];
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    # x11.enable = true; # Ative se usar X11 (i3, bspwm, etc.)
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 24;
+  };
+
+  # Importante: Para que as configurações GTK do pointerCursor funcionem, 
+  # o módulo GTK deve estar habilitado
+  gtk.enable = true;
+
 }
