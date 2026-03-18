@@ -12,8 +12,8 @@
 
   programs.dank-material-shell = {
     enable = true;
-    enableSystemMonitoring = true;
-    dgop.package = inputs.dgop.packages.${pkgs.system}.default;
+    # enableSystemMonitoring = true;
+    # dgop.package = inputs.dgop.packages.${pkgs.system}.default;
   };
 
 # programs.bash = {
@@ -50,7 +50,6 @@
     };
   };
 
-
   programs.alacritty.enable = true;
 
   home.file.".config/niri".source = ./configs/niri;
@@ -60,7 +59,6 @@
 
   home.packages = with pkgs; [
     lazygit
-    xwayland-satellite
   ];
 
   home.pointerCursor = {

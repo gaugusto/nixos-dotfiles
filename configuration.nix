@@ -72,6 +72,8 @@
   services.printing.enable = true;
   services.libinput.enable = true;
   services.dbus.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
 
   # services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -109,10 +111,10 @@
   environment.systemPackages = with pkgs; [
     neovim 
     wget
+    pass-wayland
     git
     htop
     alacritty
-    xwayland-satellite
     stow
     nautilus
     chromium
